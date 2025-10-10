@@ -19,22 +19,53 @@
 <body>
     <h1>Sales Summary</h1>
     <div id="total-sales"></div>
+    <table id="product-sales" class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Total Sales</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
     <script>
         fetch('data.csv')
             .then(response => response.text())
             .then(data => {
                 const lines = data.trim().split('\n').filter(line => line.trim());
+                const products = {};
                 let total = 0;
+
                 for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split(',').map(c => c.trim());
-                    if (cols.length > 1) {
-                        const val = parseFloat(cols[1]);
-                        if (!isNaN(val)) total += val;
+                    if (cols.length >= 2) {
+                        const productName = cols[0];
+                        const sales = parseFloat(cols[1]);
+                        if (!isNaN(sales)) {
+                            total += sales;
+                            if (products[productName]) {
+                                products[productName] += sales;
+                            } else {
+                                products[productName] = sales;
+                            }
+                        }
                     }
                 }
 
                 document.getElementById('total-sales').textContent = `Total Sales: $${total.toFixed(2)}`;
+
+                const productSalesTableBody = document.querySelector('#product-sales tbody');
+                for (const product in products) {
+                    const row = document.createElement('tr');
+                    const productNameCell = document.createElement('td');
+                    productNameCell.textContent = product;
+                    row.appendChild(productNameCell);
+                    const productSalesCell = document.createElement('td');
+                    productSalesCell.textContent = products[product].toFixed(2);
+                    row.appendChild(productSalesCell);
+                    productSalesTableBody.appendChild(row);
+                }
             });
     </script>
 
