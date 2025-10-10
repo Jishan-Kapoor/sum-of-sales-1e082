@@ -1,7 +1,7 @@
 # Sales Summary Web App
 
 ## Summary
-This static web application fetches data from a `data.csv` file (updated with new data from attachments), calculates the total sales amount, and displays it on the webpage titled "Sales Summary 892d05c0". Bootstrap 5 is loaded from jsdelivr to enhance the styling of the page. A Bootstrap table `#product-sales` has been added to list each product with its total sales and keep `#total-sales` accurate after rendering.
+This static web application fetches data from an updated `data.csv` file (updated with new data from attachments), calculates the total sales amount, and displays it on the webpage titled "Sales Summary 892d05c0". Bootstrap 5 is loaded from jsdelivr to enhance the styling of the page. A Bootstrap table `#product-sales` has been added to list each product with its total sales and keep `#total-sales` accurate after rendering.
 
 ## Setup
 To deploy the app on GitHub Pages, follow these steps:
