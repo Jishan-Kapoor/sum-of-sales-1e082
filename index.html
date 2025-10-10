@@ -68,10 +68,20 @@
                     productSalesTableBody.appendChild(row);
                 }
 
-                // New Checks
+                // Old checks
                 const rows = [...document.querySelectorAll("#product-sales tbody tr td:last-child")];
                 const sum = rows.reduce((acc, cell) => acc + parseFloat(cell.textContent), 0);
                 if (Math.abs(sum - 2600) < 0.01) {
+                    console.log('Old checks passed');
+                }
+
+                // New checks
+                if (document.querySelectorAll("#product-sales tbody tr").length >= 1
+                    && (() => {
+                        const rows = [...document.querySelectorAll("#product-sales tbody tr td:last-child")];
+                        const sum = rows.reduce((acc, cell) => acc + parseFloat(cell.textContent), 0);
+                        return Math.abs(sum - 2600) < 0.01;
+                    })()) {
                     console.log('New checks passed');
                 }
 
