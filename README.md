@@ -1,7 +1,7 @@
 # Sales Summary Web App
 
 ## Summary
-This static web application fetches data from an updated `data.csv` file (updated with new data from attachments), calculates the total sales amount, and displays it on the webpage titled "Sales Summary 892d05c0". Bootstrap 5 is loaded from jsdelivr to enhance the styling of the page. A Bootstrap table `#product-sales` has been added to list each product with its total sales and keep `#total-sales` accurate after rendering.
+This static web application fetches data from an updated `data.csv` file (updated with new data from attachments), calculates the total sales amount, and displays it on the webpage titled "Sales Summary 892d05c0". It also includes new features for enhanced data presentation in a Bootstrap table. Bootstrap 5 is loaded from jsdelivr to style the page.
 
 ## Setup
 To deploy the app on GitHub Pages, follow these steps:
@@ -15,8 +15,8 @@ To deploy the app on GitHub Pages, follow these steps:
 - Key Features:
   - Fetches data from the updated `data.csv` from attachments
   - Calculates and displays the total sales amount
-  - Lists each product with its total sales in the table `#product-sales`
-  - Updates `#total-sales` to keep it accurate after rendering
+  - Lists each product with its total sales in the Bootstrap table `#product-sales`
+  - Ensures `#total-sales` is updated accurately after rendering
   - Utilizes Bootstrap 5 for styling
 
 ## Code Explanation
@@ -24,7 +24,7 @@ This web app is built using HTML and JavaScript. Key features include:
 - Fetching data from the updated `data.csv` file using JavaScript.
 - Summing the sales column to calculate the total amount.
 - Listing each product with its total sales in the Bootstrap table `#product-sales`.
-- Keeping `#total-sales` accurate after rendering.
+- Ensuring the `#total-sales` element is accurately updated after rendering.
 - Setting the page title to "Sales Summary 892d05c0".
 - Loading Bootstrap 5 from jsdelivr for enhanced styling.
 
