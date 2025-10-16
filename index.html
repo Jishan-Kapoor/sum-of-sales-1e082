@@ -34,19 +34,19 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const data = `Product,Sales\n
-                          Product A,1200\n
-                          Product B,800\n
-                          Product C,600`;
-            
+            const csvDataPath = 'data.csv'; // Assuming the CSV file is named data.csv
+
             function parseCSV(csv) {
                 const rows = csv.trim().split('\n');
                 return rows.slice(1).map(row => {
                     const [product, sales] = row.split(',').map(cell => cell.trim());
-                    return { product, sales: parseFloat(sales) };
-                });
+                    const salesValue = parseFloat(sales);
+                    if (!isNaN(salesValue)) {
+                        return { product, sales: salesValue };
+                    }
+                }).filter(item => item !== undefined);
             }
-            
+
             function populateTable(data) {
                 const tableBody = document.querySelector('#product-sales tbody');
                 let totalSales = 0;
@@ -64,17 +64,25 @@
                 document.getElementById('total-sales').textContent = totalSales.toFixed(2);
             }
 
-            // Initialize table with CSV data
-            const salesData = parseCSV(data);
-            populateTable(salesData);
+            function fetchDataAndPopulateTable() {
+                fetch(csvDataPath)
+                    .then(response => response.text())
+                    .then(csv => {
+                        const salesData = parseCSV(csv);
+                        populateTable(salesData);
 
-            // Ensure it fulfills the conditions
-            console.assert(document.querySelectorAll("#product-sales tbody tr").length >= 1, "Table rows aren't created.");
-            (function() {
-                const rows = [...document.querySelectorAll("#product-sales tbody tr td:last-child")];
-                const sum = rows.reduce((acc, cell) => acc + parseFloat(cell.textContent), 0);
-                console.assert(Math.abs(sum - 2600) < 0.01, "Total sales sum doesn't add up.");
-            })();
+                        console.assert(document.querySelectorAll("#product-sales tbody tr").length >= 1, "Table rows aren't created.");
+                        
+                        (function() {
+                            const rows = [...document.querySelectorAll("#product-sales tbody tr td:last-child")];
+                            const sum = rows.reduce((acc, cell) => acc + parseFloat(cell.textContent), 0);
+                            console.assert(Math.abs(sum - 2600) < 0.01, "Total sales sum doesn't add up.");
+                        })();
+                    })
+                    .catch(error => console.error('Error loading CSV data:', error));
+            }
+
+            fetchDataAndPopulateTable();
         });
     </script>
 
