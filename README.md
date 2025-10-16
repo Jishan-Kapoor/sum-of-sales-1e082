@@ -34,15 +34,17 @@
     </div>
 
     <script>
-        // Sample simulation of data fetching from CSV (to be replaced with actual CSV parsing)
-        const data = [
-            { product: "Product A", sales: 120.00 },
-            { product: "Product B", sales: 85.50 },
-            { product: "Product C", sales: 150.75 },
-            { product: "Product D", sales: 90.25 },
-        ];
+        async function fetchData() {
+            const response = await fetch('data.csv');
+            const data = await response.text();
+            return data.split('\n').slice(1).map(line => {
+                const [product, sales] = line.split(',');
+                return { product: product.trim(), sales: parseFloat(sales) };
+            });
+        }
 
-        function updateSalesTable() {
+        async function updateSalesTable() {
+            const data = await fetchData();
             const tbody = document.getElementById('product-sales');
             const totalSalesElem = document.getElementById('total-sales');
             let totalSales = 0;
