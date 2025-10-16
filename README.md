@@ -1,32 +1,73 @@
-# Sales Summary Web App
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Sales</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #total-sales {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center">Product Sales</h1>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Product</th>
+                    <th>Total Sales</th>
+                </tr>
+            </thead>
+            <tbody id="product-sales">
+                <!-- Product sales data will be inserted here dynamically -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total</td>
+                    <td id="total-sales">$0.00</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
-## Summary
-This static web application fetches data from an updated `data.csv` file (updated with new data from attachments), calculates the total sales amount, and displays it on the webpage titled "Sales Summary 892d05c0". It also includes new features for enhanced data presentation in a Bootstrap table. Bootstrap 5 is loaded from jsdelivr to style the page.
+    <script>
+        // Sample simulation of data fetching from CSV (to be replaced with actual CSV parsing)
+        const data = [
+            { product: "Product A", sales: 120.00 },
+            { product: "Product B", sales: 85.50 },
+            { product: "Product C", sales: 150.75 },
+            { product: "Product D", sales: 90.25 },
+        ];
 
-## Setup
-To deploy the app on GitHub Pages, follow these steps:
-1. Upload your updated `data.csv` file that includes the new data as an attachment.
-2. Push all your files to a GitHub repository.
-3. Enable GitHub Pages in the repository settings.
+        function updateSalesTable() {
+            const tbody = document.getElementById('product-sales');
+            const totalSalesElem = document.getElementById('total-sales');
+            let totalSales = 0;
 
-## Usage
-- Access the static single-page site by visiting the GitHub Pages URL.
-- No query parameters or configuration options are needed.
-- Key Features:
-  - Fetches data from the updated `data.csv` from attachments
-  - Calculates and displays the total sales amount
-  - Lists each product with its total sales in the Bootstrap table `#product-sales`
-  - Ensures `#total-sales` is updated accurately after rendering
-  - Utilizes Bootstrap 5 for styling
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                const productCell = document.createElement('td');
+                const salesCell = document.createElement('td');
 
-## Code Explanation
-This web app is built using HTML and JavaScript. Key features include:
-- Fetching data from the updated `data.csv` file using JavaScript.
-- Summing the sales column to calculate the total amount.
-- Listing each product with its total sales in the Bootstrap table `#product-sales`.
-- Ensuring the `#total-sales` element is accurately updated after rendering.
-- Setting the page title to "Sales Summary 892d05c0".
-- Loading Bootstrap 5 from jsdelivr for enhanced styling.
+                productCell.textContent = item.product;
+                salesCell.textContent = `$${item.sales.toFixed(2)}`;
 
-## License
-This project is licensed under the MIT License.
+                row.appendChild(productCell);
+                row.appendChild(salesCell);
+
+                tbody.appendChild(row);
+
+                totalSales += item.sales;
+            });
+
+            totalSalesElem.textContent = `$${totalSales.toFixed(2)}`;
+        }
+
+        // On page load, update the sales table
+        document.addEventListener('DOMContentLoaded', updateSalesTable);
+    </script>
+</body>
+</html>
